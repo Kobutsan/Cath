@@ -136,6 +136,28 @@ nav.nav{
 
   .cta-buttons{ justify-content:center; }
 }
+
+/* ========== MODE TELEPHONE : logo seul centré ================= */
+@media (max-width:640px){
+
+  /* barre de nav centrée */
+  nav.nav{
+    left:50%;               /* on n’utilise plus left:6rem           */
+    right:auto;             /* on libère le côté droit               */
+    transform:translateX(-50%);   /* vrai centrage                    */
+    justify-content:center;       /* place le logo au centre          */
+  }
+
+  /* on cache tout le reste */
+  .nav-links,
+  .burger,
+  .nav-panel{ display:none !important; }
+
+  /* logo un peu plus petit si tu veux */
+  .logo img{ height:48px; }
+}
+
+
 }
 /* panneau visible quand .open ajouté en JS */
 .nav.open .nav-panel{display:flex}
