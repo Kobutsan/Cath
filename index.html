@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NOVA-X • Header responsive avec burger</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NOVA-X – Démo page complète</title>
 
 <!-- Source Sans 3 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,232 +11,421 @@
 <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;700&display=swap" rel="stylesheet">
 
 <style>
+/* ===== variables ================================================= */
 :root{
-  --c-accent:#1DBEA7;
-  --vh:1vh;          /* fix iOS 100vh               */
-  --gap:0rem;        /* marge autour de la carte   */
-  --radius:0px;     /* arrondi de la carte        */
-  --collapse:960px;  /* largeur où l’on bascule en burger */
+  --c-accent : #1DBEA7;
+  --c-bg     : #faf7f2;
+  --radius   : 14px;
+  --vh       : 1vh;          /* correctif iOS                     */
+  --collapse : 960px;        /* largeur du breakpoint burger      */
 }
 
-/* ========== RESET & BASE ========================= */
+/* ===== reset & base ============================================== */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;background:#fff}
+body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:#000;line-height:1.55;background:#fff}
+img,video{max-width:100%;height:auto;display:block}
 
-/* ========== HERO CARD (remplit l’écran) ========== */
+/* ===== HERO / HEADER ============================================ */
 .hero-card{
-  position:fixed;top:var(--gap);left:var(--gap);right:var(--gap);bottom:var(--gap);
-  border-radius:var(--radius);overflow:hidden;background:#fff;
+  position:relative;
+  height:calc(var(--vh)*100);  /* plein-écran mais pas fixe       */
+  overflow:hidden;
+  background:#fff;
+}
+.hero-card video{
+  position:absolute;top:50%;left:50%;
+  min-width:100%;min-height:100%;
+  width:auto;height:auto;
+  transform:translate(-50%,-50%);
+  object-fit:cover;object-position:center;z-index:0;
 }
 
-/* ---- vidéo de fond ---- */
-.hero-card video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-
-/* ========== NAVIGATION =========================== */
+/* --- navigation -------------------------------------------------- */
 nav.nav{
   position:absolute;top:3rem;left:6rem;right:6rem;
   display:flex;align-items:center;justify-content:space-between;z-index:2;
 }
-
-/*--- logo ---*/
 .logo img{height:60px}
 
-/*--- liens principaux ---*/
 .nav-links{display:flex;align-items:center;gap:1.5rem}
-
-/*  menu horizontal */
 .menu{display:flex;gap:clamp(1.25rem,2.5vw,3rem)}
-.menu a{
-  color:var(--c-accent);font-weight:500;white-space:nowrap;
-  letter-spacing:.03em;text-decoration:none;transition:text-decoration .2s
-}
+.menu a{color:var(--c-accent);font-weight:500;white-space:nowrap;letter-spacing:.03em;text-decoration:none;transition:text-decoration .2s}
 .menu a:hover{text-decoration:underline}
+.nav-btn{padding:.5rem 1.5rem;border:2px solid var(--c-accent);border-radius:30px;color:var(--c-accent);font-weight:500;text-decoration:none;white-space:nowrap}
 
-/* bouton démo */
-.nav-btn{
-  padding:.5rem 1.5rem;border:2px solid var(--c-accent);border-radius:30px;
-  color:var(--c-accent);font-weight:500;text-decoration:none;white-space:nowrap
-}
-
-/*--- BURGER ----------------------------------------------------*/
-.burger{
-  display:none;           /* visible qu’en mode « compact »   */
-  width:50px;height:50px;padding:8px;
-  border:none;background:none;cursor:pointer;
-  position:relative;z-index:3;
-}
-.burger span,
-.burger::before,
-.burger::after{
-  content:'';position:absolute;left:8px;right:8px;height:3px;
-  background:var(--c-accent);transition:transform .3s,opacity .3s
-}
+/* burger */
+.burger{display:none;width:50px;height:50px;padding:8px;border:0;background:none;cursor:pointer;position:relative;z-index:3}
+.burger span,.burger::before,.burger::after{content:'';position:absolute;left:8px;right:8px;height:3px;background:var(--c-accent);transition:transform .3s,opacity .3s}
 .burger span{top:50%;transform:translateY(-50%)}
 .burger::before{top:12px}
 .burger::after{bottom:12px}
-
-/* état ouvert (croix) */
 .burger[aria-expanded="true"]::before{transform:translateY(6px) rotate(45deg)}
-.burger[aria-expanded="true"]::after{transform:translateY(-6px) rotate(-45deg)}
-.burger[aria-expanded="true"] span{opacity:0}
+.burger[aria-expanded="true"]::after {transform:translateY(-6px) rotate(-45deg)}
+.burger[aria-expanded="true"] span   {opacity:0}
 
-/* ------ Panneau vertical (menu mobile) -------------*/
-.nav-panel{
-  display:none;           /* caché par défaut               */
-  position:absolute;top:100%;right:0;
-  background:rgba(255,255,255,.9);
-  backdrop-filter:blur(6px);
-  padding:2rem 3rem;min-width:220px;
-  flex-direction:column;align-items:flex-start;gap:1.25rem;
-  border-bottom-left-radius:var(--radius);
-}
+/* panneau mobile */
+.nav-panel{display:none;position:absolute;top:100%;right:0;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);padding:2rem 3rem;min-width:220px;flex-direction:column;align-items:flex-start;gap:1.25rem;border-bottom-left-radius:var(--radius)}
 .nav-panel a{color:var(--c-accent);text-decoration:none;font-weight:500}
+.nav.open .nav-panel{display:flex}
 
-/* TEXTE + CTA ===================================== */
-.header-content{
-  position:absolute;top:50%;left:6rem;transform:translateY(-50%);
-  max-width:600px;color:#000;z-index:2
-}
-.header-content h1{
-  white-space:pre;font-size:clamp(1rem,6vw,4rem);
-  line-height:1.2;font-weight:700;margin-bottom:2rem
-}
+/* texte du header */
+.header-content{position:absolute;top:50%;left:6rem;transform:translateY(-50%);max-width:600px;z-index:2}
+.header-content h1{white-space:pre;font-size:clamp(1rem,6vw,4rem);line-height:1.2;font-weight:700;margin-bottom:2rem}
 .highlight{color:var(--c-accent)}
 .header-content p{font-size:1rem;line-height:1.6;margin-bottom:2rem;max-width:550px}
 .cta-buttons{display:flex;align-items:center;gap:1rem}
-.cta-buttons .btn{
-  padding:.75rem 2rem;border-radius:30px;font-weight:500;text-decoration:none;white-space:nowrap
-}
+.cta-buttons .btn{padding:.75rem 2rem;border-radius:30px;font-weight:500;text-decoration:none;white-space:nowrap}
 .btn.primary{background:var(--c-accent);color:#fff;border:2px solid transparent}
-.btn.outline{background:transparent;color:var(--c-accent);border:2px solid var(--c-accent)}
+.btn.outline {background:transparent;color:var(--c-accent);border:2px solid var(--c-accent)}
 
-/* ========== BREAK-POINT burger =================== */
-@media (max-width:1024px){
-  .menu,
-  .nav-btn{display:none}      /* on masque le menu horiz + bouton */
-  .burger{display:block}      /* on affiche l’icône burger        */
-  .header-content{
-    left:50%;
-    transform:translate(-50%,-50%);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    max-width:80vw;
-  }
-
-  /* paragraphe : on remet la marge basse */
-  .header-content p{
-    max-width:60ch;
-    margin:0 auto 2rem;   /* ← 1.5rem sous le texte comme avant */
-  }
-
-  /*  (option équivalente)
-      .cta-buttons{ margin-top:1.5rem; }   */
-
-  .cta-buttons{ justify-content:center; }
+/* breakpoint burger */
+@media(max-width:1024px){
+  .menu,.nav-btn{display:none}
+  .burger{display:block}
+  .header-content{left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-align:center;max-width:80vw}
+  .header-content p{max-width:60ch;margin:0 auto 2rem}
+  .cta-buttons{justify-content:center}
+}
+/* mode mobile logo seul */
+@media(max-width:640px){
+  nav.nav{left:50%;right:auto;transform:translateX(-50%);justify-content:center}
+  .nav-links,.burger,.nav-panel{display:none !important}
+  .logo img{height:48px}
 }
 
-/* ========== MODE TELEPHONE : logo seul centré ================= */
-@media (max-width:640px){
+/* =========================================================
+   SECTION — alternance carte / texte
+   ========================================================= */
+.alt-section{padding:6rem 1rem;display:flex;justify-content:center}
+.alt-wrap{max-width:1100px;width:100%;display:flex;flex-direction:column;gap:6rem}
 
-  /* barre de nav centrée */
-  nav.nav{
-    left:50%;               /* on n’utilise plus left:6rem           */
-    right:auto;             /* on libère le côté droit               */
-    transform:translateX(-50%);   /* vrai centrage                    */
-    justify-content:center;       /* place le logo au centre          */
-  }
-
-  /* on cache tout le reste */
-  .nav-links,
-  .burger,
-  .nav-panel{ display:none !important; }
-
-  /* logo un peu plus petit si tu veux */
-  .logo img{ height:48px; }
+.alt-block{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4rem}
+.alt-img img{width:100%;border-radius:var(--radius);}
+.alt-text{max-width:480px}
+.alt-text .eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#1DBEA7;margin-bottom:.5rem}
+.alt-text h3{text-transform: uppercase;font-size:3rem;font-weight:1500;line-height:1.3;margin-bottom:1rem;color:#1DBEA7}
+.alt-text p{color:#838383;font-size:1rem}
+.alt-block.reverse .alt-img{order:2}
+.alt-block.reverse .alt-text{order:1;text-align:right;margin-left:auto}
+.alt-text{
+  max-width:400px;
+  margin:0 auto;                   /* centre dans la grille        */
+  text-align:center;               /* centre l’alignement          */
+  display:flex;flex-direction:column;align-items:center;
 }
 
-
+/* on NE réaligne plus à droite quand c’est .reverse -------------- */
+.alt-block.reverse .alt-text{
+  text-align:center;
+  margin:0 auto;
+  align-items:center;
 }
-/* panneau visible quand .open ajouté en JS */
-.nav.open .nav-panel{display:flex}
+
+@media(max-width:800px){
+  .alt-block{grid-template-columns:1fr;gap:2rem}
+  .alt-block.reverse .alt-img,.alt-block.reverse .alt-text{order:unset;text-align:left;margin-left:0}
+  .alt-text{max-width:none;text-align:left}
+}
+
+/* ===== GRAND INTRO CENTRÉE =============================== */
+.intro-big{
+  /*background:var(--c-bg);          /* même crème que le site  */
+  padding:8rem 1rem 6rem;
+  display:flex;justify-content:center;
+}
+.intro-wrap{
+  max-width:1100px;width:100%;
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:2.5rem;
+}
+
+/* eyebrow réutilise déjà la classe globale */
+.eyebrow{letter-spacing:.08em;text-transform:uppercase;font-size:.75rem;font-weight:700;color:#8d8d8d}
+
+/* gros titre sérif (Canela ou Playfair) */
+.intro-title{
+  font-family:'Source sans 3', serif;
+  color:#1DBEA7;  /* ← remplace par "Canela" si tu l’as */
+  font-weight:600;
+  font-size:clamp(2rem,5.5vw,3.8rem);
+  line-height:1.15;
+}
+
+/* paragraphe gris centré */
+.intro-lead{
+  max-width:850px;
+  font-size:1.125rem;
+  line-height:1.65;
+  color:#666;
+}
+
+/* responsive : espace réduit sur mobile */
+@media(max-width:640px){
+  .intro-big{padding:6rem 1rem 4rem}
+  .intro-lead{font-size:1rem}
+}
+
+/* logo de l’intro */
+.intro-logo{
+  height:48px;           /* ajuste si besoin */
+  margin-bottom:1.5rem;  /* espace sous le logo */
+}
+
+/* ===== Hero pleine largeur ===================================== */
+.coach-hero{
+  position:relative;width:100%;
+  height:60vh;min-height:480px;    /* hauteur flexible            */
+  overflow:hidden;
+}
+/* image fond */
+.coach-bg{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+}
+
+/* voile sombre doux pour la lisibilité */
+.coach-hero::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,.25) 0%,rgba(0,0,0,.25) 100%);
+}
+
+/* contenu centré */
+.coach-overlay{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  max-width:1000px;width:90%;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  color:#fff;gap:2rem;
+}
+
+/* réutilise la classe eyebrow, version blanche */
+.eyebrow.inverse{
+  font-size:.8rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:#fff;
+}
+
+/* gros titre sérif au centre */
+.coach-overlay h2{
+  font-family:'Playfair Display',serif;        /* ou "Canela" si tu l’as */
+  font-weight:700;
+  font-size:clamp(1.8rem,3.5vw,3.2rem);
+  line-height:1.2;
+}
+
+/* badges boutiques / partenaires */
+.coach-badges{display:flex;gap:1rem;flex-wrap:wrap}
+.coach-badges img{height:40px;width:auto}
+
+/* lien sous les badges */
+.coach-link{
+  font-size:.9rem;color:#fff;text-decoration:underline;
+  transition:opacity .2s;
+}
+.coach-link:hover{opacity:.8}
+
+/* ------ responsive --------- */
+@media(max-width:640px){
+  .coach-hero{height:65vh;min-height:380px}
+  .coach-overlay{gap:1.5rem}
+  .coach-badges img{height:32px}
+}
+
 </style>
 </head>
 <body>
 
+<!-- ===== HEADER ================================================== -->
 <header class="hero-card">
-
   <video autoplay muted loop playsinline poster="images/header-fallback.jpg">
     <source src="video/videosite.mp4" type="video/mp4">
   </video>
 
   <nav class="nav" aria-label="Navigation principale">
-    <a href="/" class="logo" aria-label="Accueil">
-      <img src="images/logo.svg" alt="">
-    </a>
+    <a href="/" class="logo" aria-label="Accueil"><img src="images/logo.svg" alt=""></a>
 
-    <!--  Liens pour version mobile : même contenu que le menu -->
     <div class="nav-panel">
-      <a href="#">Features</a>
-      <a href="#">Benefits</a>
-      <a href="#">Testimonials</a>
-      <a href="#">Media</a>
-      <a href="#" class="nav-btn">Request a demo</a>
+      <a href="#">Features</a><a href="#">Benefits</a><a href="#">Testimonials</a>
+      <a href="#">Media</a><a href="#" class="nav-btn">Request a demo</a>
     </div>
 
-    <!-- Menu horizontal -->
     <div class="nav-links">
       <div class="menu">
-        <a href="#">Features</a>
-        <a href="#">Benefits</a>
-        <a href="#">Testimonials</a>
-        <a href="#">Media</a>
+        <a href="#">Features</a><a href="#">Benefits</a><a href="#">Testimonials</a><a href="#">Media</a>
       </div>
       <a href="#" class="nav-btn">Request a demo</a>
     </div>
 
-    <!-- Burger -->
-    <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false">
-      <span></span>
-    </button>
+    <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span></button>
   </nav>
 
   <div class="header-content">
-    <h1>What if you could reduce
-your exposure by <span class="highlight">90%</span> without
-wearing lead aprons ?</h1>
-
+    <h1>What if you could reduce<br>your exposure by <span class="highlight">90%</span> without<br>wearing lead aprons ?</h1>
     <p>Step into the future of safety with NOVA-X — the world’s first full-body,
        team-wide protection system that reduces radiation exposure by up to 90 %,
-       without the burden of lead aprons.<br>
-       Seamless design. Game-changing
-       technology. Trusted by experts, built for every procedure.</p>
-
+       without the burden of lead aprons.</p>
     <div class="cta-buttons">
       <a href="#" class="btn primary">Request a demo</a>
-      <a href="#" class="btn outline">Watch Video&nbsp;→</a>
+      <a href="#" class="btn outline">Watch Video →</a>
     </div>
   </div>
 </header>
 
+<!-- ===== CONTENU ================================================= -->
+<main>
+
+  <!-- SECTION D’INTRO GRAND FORMAT -->
+<section class="intro-big">
+  <div class="intro-wrap">
+    <!-- logo centré -->
+    <img src="images/novax.png" alt="CathPax" class="intro-logo">
+
+    <h2 class="intro-title">
+      The only team-wide full body protection system with 2mm lead equivalency.
+    </h2>
+
+    <p class="intro-lead">
+      Guter Schlaf ist der Motor für Energie am Tag. NOVA-X kann dich
+      dabei unterstützen, deinen Tag positiv abzuschließen, schneller
+      einzuschlafen und ausgeruhter aufzuwachen.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION • Schlaf-Coaching pleine largeur -->
+<section class="coach-hero">
+  <!-- image de fond 2560×1000 env. -->
+  <img src="images/coach-hero.jpg" alt="" class="coach-bg">
+
+  <div class="coach-overlay">
+    <p class="eyebrow inverse">SCHLAFCOACHING</p>
+
+    <h2>
+      Verbinde NOVA-X mit deiner&nbsp;Smartwatch<br>
+      und bringe deinen Schlaf auf das nächste&nbsp;Level.
+    </h2>
+
+    <div class="coach-badges">
+      <img src="images/apple-health-badge.svg"  alt="Works with Apple Health">
+      <img src="images/health-connect-badge.svg" alt="Works with Health Connect">
+    </div>
+
+    <a href="#" class="coach-link">Kompatible Smartwatches anzeigen</a>
+  </div>
+</section>
+
+  <!-- Section alternée cartes / textes -->
+  <section class="alt-section">
+    <div class="alt-wrap">
+
+      <article class="alt-block">
+        <figure class="alt-img"><img src="images/alt1.webp" alt=""></figure>
+        <div class="alt-text">
+          <h3>Unmatched radiation protection</h3>
+          <p>Experience unmatched radiation protection with unique patented materials offering 2 mm lead equivalency.</p>
+        </div>
+      </article>
+
+      <article class="alt-block reverse">
+        <figure class="alt-img"><img src="images/alt2.webp" alt=""></figure>
+        <div class="alt-text">
+          <h3>Unique safety features (Dosicath® & Laserguards®)</h3>
+          <p>Dosicath® monitors real-time doses inside and outside the system, enabling prompt adjustments and recording all data. LaserGuard® visually indicates protected zones, ensuring full-body safety and unique positioning guidance within Nova-X®.</p>
+        </div>
+      </article>
+
+      <article class="alt-block">
+        <figure class="alt-img"><img src="images/alt3.webp" alt=""></figure>
+        <div class="alt-text">
+          <h3>OUTSTANDING ERGONOMICS</h3>
+          <p>Nova-X offers outstanding ergonomics to limit its footprint and ensure perfect fit with any cathlab.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SECTION D’INTRO GRAND FORMAT -->
+<section class="intro-big">
+  <div class="intro-wrap">
+    <!-- logo centré -->
+    <img src="images/novax.png" alt="CathPax" class="intro-logo">
+
+    <h2 class="intro-title">
+      The only team-wide full body protection system with 2mm lead equivalency.
+    </h2>
+
+    <p class="intro-lead">
+      Guter Schlaf ist der Motor für Energie am Tag. NOVA-X kann dich
+      dabei unterstützen, deinen Tag positiv abzuschließen, schneller
+      einzuschlafen und ausgeruhter aufzuwachen.
+    </p>
+  </div>
+</section>
+
+<!-- SECTION • Schlaf-Coaching pleine largeur -->
+<section class="coach-hero">
+  <!-- image de fond 2560×1000 env. -->
+  <img src="images/coach-hero.jpg" alt="" class="coach-bg">
+
+  <div class="coach-overlay">
+    <p class="eyebrow inverse">SCHLAFCOACHING</p>
+
+    <h2>
+      Verbinde NOVA-X mit deiner&nbsp;Smartwatch<br>
+      und bringe deinen Schlaf auf das nächste&nbsp;Level.
+    </h2>
+
+    <div class="coach-badges">
+      <img src="images/apple-health-badge.svg"  alt="Works with Apple Health">
+      <img src="images/health-connect-badge.svg" alt="Works with Health Connect">
+    </div>
+
+    <a href="#" class="coach-link">Kompatible Smartwatches anzeigen</a>
+  </div>
+</section>
+
+  <!-- Section alternée cartes / textes -->
+  <section class="alt-section">
+    <div class="alt-wrap">
+
+      <article class="alt-block">
+        <figure class="alt-img"><img src="images/alt1.webp" alt=""></figure>
+        <div class="alt-text">
+          <h3>Unmatched radiation protection</h3>
+          <p>Experience unmatched radiation protection with unique patented materials offering 2 mm lead equivalency.</p>
+        </div>
+      </article>
+
+      <article class="alt-block reverse">
+        <figure class="alt-img"><img src="images/alt2.webp" alt=""></figure>
+        <div class="alt-text">
+          <h3>Unique safety features (Dosicath® & Laserguards®)</h3>
+          <p>Dosicath® monitors real-time doses inside and outside the system, enabling prompt adjustments and recording all data. LaserGuard® visually indicates protected zones, ensuring full-body safety and unique positioning guidance within Nova-X®.</p>
+        </div>
+      </article>
+
+      <article class="alt-block">
+        <figure class="alt-img"><img src="images/alt3.webp" alt=""></figure>
+        <div class="alt-text">
+          <h3>OUTSTANDING ERGONOMICS</h3>
+          <p>Nova-X offers outstanding ergonomics to limit its footprint and ensure perfect fit with any cathlab.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
 <script>
-/* ----- 100 vh iOS fix -------------------------------------------- */
-function updateVh(){
-  document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
-}
-window.addEventListener('resize',updateVh);
-updateVh();
+/* ----- iOS 100vh fix ----------------------------- */
+function updateVh(){ document.documentElement.style.setProperty('--vh', window.innerHeight*0.01+'px'); }
+window.addEventListener('resize',updateVh); updateVh();
 
-/* ----- Burger toggle --------------------------------------------- */
-const nav      = document.querySelector('.nav');
-const burger   = document.querySelector('.burger');
-
-burger.addEventListener('click', () => {
-  const expanded = burger.getAttribute('aria-expanded') === 'true';
-  burger.setAttribute('aria-expanded', !expanded);
-  nav.classList.toggle('open', !expanded);
-});
+/* ----- Burger toggle ----------------------------- */
+const nav=document.querySelector('.nav'), burger=document.querySelector('.burger');
+if(burger){burger.addEventListener('click',()=>{const ex=burger.getAttribute('aria-expanded')==='true';burger.setAttribute('aria-expanded',!ex);nav.classList.toggle('open',!ex);});}
 </script>
 </body>
 </html>
