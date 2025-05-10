@@ -1,0 +1,116 @@
+/* ===== CONTACT ============================================== */
+.contact-section{
+  /* rythme global du site */
+  padding-block: var(--space-section);
+  background:#fff;
+}
+
+.contact-grid{
+  max-width:1100px;
+  margin-inline:auto;
+  display:flex;
+  gap:3rem;
+  align-items:stretch;            /* la photo suit la hauteur du form */
+}
+
+/* ---- formulaire ------------------------------------------- */
+.contact-form{
+  flex:0 1 480px;
+  display:flex;
+  flex-direction:column;
+  gap:1.75rem;
+}
+
+.contact-title{
+  font-size:1.8rem;
+  font-weight:700;
+  line-height:1.25;
+}
+
+/* rangées à deux colonnes (nom/prénom, téléphone…) */
+.field-row{
+  display:grid;
+  gap:1rem;
+}
+.field-row.two-cols{ grid-template-columns:1fr 1fr; }
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:.35rem;
+}
+
+label span{ color:var(--c-accent); }
+
+input,
+select,
+textarea{
+  font:inherit;
+  padding:.75rem 1rem;
+  border:2px solid #b5b5b5;
+  border-radius:8px;
+  outline:none;
+}
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--c-accent);
+}
+
+/* check-boxes (rôle) */
+.role{
+  border:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:.5rem;
+}
+.chk{
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  font-size:.95rem;
+}
+
+/* bouton d’envoi */
+.contact-submit{
+  display:block;
+  width:100%;
+  background:#000;
+  color:#fff;
+  font-weight:600;
+  text-align:center;
+  padding:.9rem 2rem;
+  border-radius:8px;
+  border:0;
+}
+.contact-submit:hover{ background:#111; }
+
+/* ---- photo ------------------------------------------------- */
+.contact-photo{
+  flex:1 1 0;                    /* prend tout le restant */
+  min-width:280px;
+  overflow:hidden;
+  border-radius:var(--radius);
+  position:relative;
+  margin-block:-2%;              /* léger débord ↑|↓ */
+}
+.contact-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* ---- responsive < 900 px ----------------------------------- */
+@media (max-width:900px){
+  .contact-grid{
+    flex-direction:column;
+  }
+  .contact-photo{
+    margin:0;                    /* on annule le débord */
+    height:320px;                /* fixe un ratio agréable */
+  }
+}
+
+/* utilitaire pour masquer/afficher */
+.is-hidden{ display:none !important; }

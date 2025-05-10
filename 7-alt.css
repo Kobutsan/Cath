@@ -1,0 +1,114 @@
+/* ===============================================================
+   ALT SECTION –  3 blocs alternés avec hotspots
+   =============================================================== */
+
+/* ---------- wrapper général ---------------------------------- */
+.alt-section{
+  padding-block:var(--space-section);
+  display:flex;
+  justify-content:center;
+}
+.alt-wrap{
+  max-width:1100px;
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  gap:6rem;
+}
+
+/* ---------- bloc alterné (image | texte/panneaux) ------------- */
+.alt-block{
+  display:grid;
+  grid-template-columns:1fr 1fr;     /* mêmes largeurs            */
+  align-items:center;                /* centrage vertical global  */
+  gap:4rem;
+}
+
+/* ---------- colonne IMAGE + hotspots ------------------------- */
+.alt-img{position:relative}
+.alt-img img{
+  width:100%;
+  border-radius:var(--radius);
+}
+
+/* ---------- colonne TEXTE / PANNEAUX ------------------------- */
+.alt-col{
+  position:relative;                 /* contexte pour .alt-reveal */
+  width:100%;                        /* même largeur que l’image  */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;            /* centrage vertical du cont */
+  text-align:center;
+}
+
+/* base commune texte & panneaux ------------------------------- */
+.alt-text,
+.alt-reveal{
+  width:100%;
+  max-width:600px;                   /* limite pour grands écrans */
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1.3rem;
+  transition:opacity .45s,transform .45s;
+}
+.alt-text h3,
+.alt-reveal h3{
+  margin:0;
+  text-transform:uppercase;
+  font-size:3rem;
+  font-weight:700;
+  line-height:1.25;
+  color:var(--c-accent);
+}
+.alt-text p,
+.alt-reveal p{
+  margin:0;
+  font-size:1rem;
+  color:#838383;
+}
+
+/* ---------- PANNEAUX révélés --------------------------------- */
+.alt-reveal{
+  position:absolute;
+  inset:0;                           /* remplit toute .alt-col    */
+  padding-inline:1rem;
+  opacity:0;
+  pointer-events:none;
+  transform:translateY(40px);
+  display:none;
+  justify-content:center;            /* centre aussi le contenu   */
+}
+.alt-reveal.is-show{
+  display:flex;
+  opacity:1;
+  pointer-events:auto;
+  transform:translateY(0);
+}
+.alt-reveal-img{
+  width:100%;                        /* exactement la largeur col */
+  height:auto;
+  border-radius:var(--radius);
+}
+
+/* ---------- état « hotspot actif » --------------------------- */
+.alt-block.show-graph .alt-text{
+  opacity:0;
+  transform:translateY(-40px);
+}
+
+/* ---------- alternance gauche / droite ----------------------- */
+.alt-block.reverse .alt-img{order:2}
+.alt-block.reverse .alt-col{order:1}
+
+/* ---------- responsive < 800 px ------------------------------ */
+@media (max-width:800px){
+  .alt-block{grid-template-columns:1fr}
+  .alt-text,
+  .alt-reveal{
+    text-align:left;
+    align-items:flex-start;
+    max-width:none;
+  }
+}

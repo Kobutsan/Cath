@@ -1,0 +1,104 @@
+/* ===== HOTSPOT – visuel, anim, accessibilité ================= */
+
+/* bouton “général” : même dimensions qu’avant */
+.Hotspot{
+  all        : unset;
+  position   : absolute;
+  transform  : translate(-50%, -50%);
+  cursor     : pointer;
+  width      : calc(var(--core-size) * var(--pulse-scale));
+  height     : calc(var(--core-size) * var(--pulse-scale));
+  display    : grid;
+  place-items: center;
+
+  /* variables état repos */
+  --core   : var(--c-core);
+  --back   : rgba(181,181,181,.85);      /* ⇦ opacité 45 % uniquement */
+  --wave   : rgba(255,255,255,.75);      /* ⇦ vagues plus légères     */
+  --icon   : var(--c-icon);
+  --dur    : var(--pulse-duration);
+  --offset : var(--pulse-offset);
+}
+
+/* état actif (vert) – on ne touche pas aux opacités */
+.Hotspot.is-active{
+  --core   : var(--c-core-on);
+  --back   : var(--c-back-on);
+  --wave   : var(--c-wave-on);
+  --icon   : var(--c-icon-on);
+  --dur    : var(--pulse-duration-on);
+  --offset : var(--pulse-offset-on);
+}
+
+/* disque arrière (visuel uniquement) */
+.Hotspot::before{
+  content         : "";
+  position        : absolute;
+  inset           : 0;
+  margin          : auto;
+  width           : calc(var(--core-size) + 10px);
+  height          : calc(var(--core-size) + 10px);
+  background      : var(--back);
+  border-radius   : 50%;
+  pointer-events  : none;               /* ← ne vole pas le clic    */
+  transition      : background .25s;
+}
+
+/* noyau cliquable + icône */
+.Hotspot__core{
+  position  : relative;
+  z-index   : 2;
+  width     : var(--core-size);
+  height    : var(--core-size);
+  background: var(--core);
+  border-radius: 50%;
+  display   : grid;
+  place-items:center;
+  color     : var(--icon);
+  transition: background .25s, color .25s;
+}
+.Hotspot__icon{
+  width : 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width : 2;
+  stroke-linecap: round;
+}
+.Hotspot.is-active line:first-child{opacity:0;}   /* “+” devient “–” */
+
+/* vagues pulsées */
+@keyframes pulse{
+  0%   { transform:scale(1);                    opacity:.50; }
+  100% { transform:scale(var(--pulse-scale));   opacity:0;    }
+}
+.Hotspot__wave{
+  position        : absolute;
+  inset           : 0;
+  margin          : auto;
+  width           : var(--core-size);
+  height          : var(--core-size);
+  background      : var(--wave);
+  border-radius   : 50%;
+  z-index         : 1;
+  animation       : pulse var(--dur) linear infinite;
+  pointer-events  : none;                        /* ← ne capte pas le clic */
+  transition      : background .25s;
+}
+.wave-2{animation-delay:var(--offset);}
+.wave-3{animation-delay:calc(var(--offset) * 2);}
+
+/* Accessibilité : focus clavier très visible ---------------- */
+.Hotspot__core:focus-visible{
+  outline:3px solid var(--c-accent);
+  outline-offset:3px;
+}
+
+/* Motion : si l’utilisateur préfère « réduire », on coupe les vagues */
+@media (prefers-reduced-motion: reduce){
+  .Hotspot__wave{ animation:none; }
+}
+
+/* Responsive : facultatif, on réduit un peu les hotspots <480 px */
+@media (max-width:480px){
+  :root{ --core-size:36px; }
+}
