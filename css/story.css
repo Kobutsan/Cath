@@ -1,0 +1,71 @@
+/* ===============================================================
+   STORY  –  About Cathpax  (titre + paragraphe + read-more)
+   =============================================================== */
+
+/* ---------- section wrapper ---------------------------------- */
+.story{
+  /* rythme vertical global (déjà défini dans 0-base.css) */
+  padding-block: var(--space-section);
+
+  /* marge latérale identique aux autres */
+  padding-inline: 1rem;
+
+  background:#fff;
+  display:flex;
+  justify-content:center;
+}
+
+/* ---------- contenu (texte justifié) ------------------------- */
+.story-wrap{
+  max-width:900px;
+  width:100%;
+  margin:0 auto;
+  font-size:1.1rem;
+  line-height:1.65;
+  text-align:justify;
+}
+
+/* ---------- titre ------------------------------------------- */
+.story-title{
+  text-align:center;
+  font-size:2rem;
+  font-weight:700;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  color:var(--c-accent);
+  margin:0 0 2rem;                 /* espace sous le titre */
+}
+
+/* ---------- paragraphe supplémentaire (caché) --------------- */
+.story-more{
+  max-height:0;                    /* caché par défaut     */
+  overflow:hidden;
+  transition:max-height .45s ease;
+}
+.story.is-open .story-more{
+  max-height:2000px;               /* largement suffisant  */
+}
+
+/* ---------- bouton “MORE / LESS” ---------------------------- */
+.story-toggle{
+  display:block;                   /* → centre horizontal  */
+  margin:1.8rem auto 0;
+  padding:.9rem 2.2rem;
+  border-radius:30px;
+  border:2px solid var(--c-accent);
+  background:#fff;
+  color:var(--c-accent);
+  font-weight:600;
+  cursor:pointer;
+  transition:background .25s, color .25s;
+}
+.story-toggle:hover{
+  background:var(--c-accent);
+  color:#fff;
+}
+
+/* ---------- accessibilité clavier --------------------------- */
+.story-toggle:focus-visible{
+  outline:3px solid var(--c-accent);
+  outline-offset:3px;
+}

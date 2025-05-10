@@ -1,0 +1,55 @@
+/* ===============================================================
+   DOWNLOADS   –  vignettes + CTA
+   =============================================================== */
+.downloads{
+  /* rythme vertical identique à toutes les sections */
+  padding-block: var(--space-section);
+
+  /* marge horizontale d’1 rem conservée */
+  padding-inline: 1rem;
+
+  background:#fff;
+  display:flex;
+  justify-content:center;
+}
+
+/* ---------- grille des cartes ------------------------------- */
+.downloads-wrap{
+  max-width:1200px;
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px,1fr));
+  gap:4rem 3rem;             /* 4 rem vertical, 3 rem horizontal */
+  align-items:start;
+}
+
+/* ---------- carte ------------------------------------------- */
+.dl-card{
+  display:flex;
+  flex-direction:column;
+  gap:2.25rem;
+  align-items:center;
+}
+
+/* vignette */
+.dl-thumb img{
+  width:100%;
+  height:auto;
+  border-radius:var(--radius);
+  display:block;
+}
+
+/* ---------- bouton de téléchargement ------------------------ */
+/* on réutilise .btn.primary ⇒ ne définir que le padding/spacing
+   supplémentaire propre à ce contexte */
+.dl-btn{
+  @apply btn primary;        /* si vous utilisez Tailwind
+                                (sinon gardez la ligne ci-dessous) */
+  padding:.95rem 3rem;       /* légèrement plus haut & large       */
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  text-decoration:none;
+}
+.dl-btn svg{flex:0 0 auto;}   /* icône -> jamais rétrécie          */

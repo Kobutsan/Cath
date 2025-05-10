@@ -1,0 +1,84 @@
+/* ===== FOOTER =============================================== */
+.site-footer{
+  background:#26b2a7;
+  color:#fff;
+
+  /* rythme vertical unique  — même règle partout */
+  padding-block: var(--space-section);
+  padding-bottom:1rem;
+
+  /* marge latérale ramassée pour les écrans ≤ 640 px */
+  padding-inline:1.5rem;
+  font-size:1rem;
+}
+
+/* ---------- conteneur -------------------------------------- */
+.footer-inner{
+  max-width:1200px;
+  margin-inline:auto;            /* centre la ligne          */
+  margin-block-end:2.5rem;       /* léger recul avant le copyright */
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  gap:3rem;
+}
+
+/* ---------- logo ------------------------------------------- */
+.footer-logo img{
+  max-height:90px;
+  max-width:190px;               /* limite la largeur si SVG très long */
+  height:auto;width:auto;
+  object-fit:contain;
+}
+
+/* ---------- colonnes de liens ------------------------------ */
+.footer-cols{
+  display:flex;
+  gap:4rem;
+  flex-wrap:wrap;
+}
+.footer-col h4{
+  font-size:1.8rem;
+  font-weight:700;
+  margin-block-end:1.2rem;
+}
+.footer-col ul{
+  list-style:none;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:.9rem;
+}
+.footer-col a{
+  color:#fff;
+  text-decoration:none;
+  opacity:.9;
+  transition:opacity .2s;
+}
+.footer-col a:hover{opacity:1}
+
+/* ---------- copyright / mentions légales ------------------- */
+.footer-copy{
+  text-align:center;
+  font-size:.9rem;
+  line-height:1.6;
+  opacity:.95;
+}
+.footer-copy a{
+  color:#fff;
+  text-decoration:none;
+}
+.footer-copy a:hover{text-decoration:underline}
+
+/* ---------- responsive < 768 px ---------------------------- */
+@media (max-width:768px){
+  .footer-inner{
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    gap:2rem;
+  }
+  .footer-logo img{height:80px}
+  .footer-cols{justify-content:center;gap:2.5rem}
+}

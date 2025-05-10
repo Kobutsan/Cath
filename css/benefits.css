@@ -1,0 +1,67 @@
+/* ===============================================================
+   BENEFITS  –  4 cartes avec icône + titre + texte
+   =============================================================== */
+.benefits{
+  /* rythme vertical unifié (voir 0-base.css) */
+  padding-top:0px;
+
+  /* marge latérale inchangée */
+  padding-inline: 1rem;
+
+  display:flex;
+  justify-content:center;
+  background:#fff;
+}
+
+/* ---------- grille ------------------------------------------ */
+.benefits-wrap{
+  max-width:1200px;
+  width:100%;
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px,1fr));
+  gap:4rem;
+  text-align:center;
+}
+
+/* ---------- carte ------------------------------------------- */
+.benefit{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:1.8rem;
+}
+
+/* ---------- icône circulaire -------------------------------- */
+.benefit-ico{
+  width:150px;
+  height:150px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.benefit-ico img{
+  width:56%;
+  height:auto;
+}
+
+/* ---------- titre & texte ----------------------------------- */
+.benefit-title{
+  font-size:1.35rem;
+  font-weight:700;
+  line-height:1.3;
+  text-transform:uppercase;
+  color:var(--c-accent);
+}
+.benefit-text{
+  font-size:1rem;
+  line-height:1.55;
+  color:#24a39a;              /* vert plus doux             */
+}
+
+/* ---------- responsive < 640 px ----------------------------- */
+@media (max-width:640px){
+  .benefits-wrap{gap:3rem}
+  .benefit-ico{width:90px;height:90px}
+  .benefit-title{font-size:1.15rem}
+}

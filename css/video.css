@@ -1,0 +1,35 @@
+/* ===============================================================
+   VIDEO SECTION  –  16:9 responsive, centrée, coins arrondis
+   =============================================================== */
+
+/* ---------- SECTION WRAPPER ---------------------------------- */
+.video-section{
+  padding-block: var(--space-section);   /* même rythme vertical   */
+  padding-inline: 1rem;                  /* marge latérale idem    */
+  display:flex;
+  justify-content:center;
+  background:#fff;                       /* fond neutre global     */
+}
+
+/* ---------- CONTENEUR VIDEO ---------------------------------- */
+.video-wrapper{
+  max-width:1200px;                      /* largeur max            */
+  width:100%;
+  border-radius:var(--radius);
+  overflow:hidden;                       /* masque les coins ronds */
+  background:#000;                       /* évite le flash blanc   */
+  box-shadow:0 6px 24px rgba(0,0,0,.12);
+}
+
+/* ---------- VIDEO FLUIDE 16:9 -------------------------------- */
+.video-wrapper video{
+  width:100%;
+  height:auto;
+  aspect-ratio:16 / 9;
+  display:block;
+}
+
+/* ---------- RESPONSIVE --------------------------------------- */
+@media (max-width:640px){
+  .video-section{ padding-block: calc(var(--space-section) / 1.5); }
+}

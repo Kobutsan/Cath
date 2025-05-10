@@ -1,0 +1,75 @@
+/* ===============================================================
+   0 — BASE | variables • reset • helpers • global spacing
+   =============================================================== */
+
+/* ---------- VARIABLES GLOBALES ------------------------------ */
+:root{
+  /* palette / rayon --------------------------------------- */
+  --c-accent       : #1DBEA7;
+  --c-bg           : #faf7f2;
+  --radius         : 14px;
+
+  /* rythme vertical – un seul endroit à ajuster ----------- */
+  --space-section  : clamp(4rem, 7vw, 6rem); /* min – ratio – max */
+
+  /* viewport iOS fix -------------------------------------- */
+  --vh             : 1vh;        /* utilisé dans .hero-card */
+
+  /* breakpoint burger ------------------------------------- */
+  --collapse       : 960px;
+
+  /* hotspots (résultats & alt-section) --------------------- */
+  --core-size         : 44px;
+  --pulse-scale       : 3;
+  --pulse-duration    : 3s;
+  --pulse-offset      : 1.5s;
+  --pulse-duration-on : 1.8s;
+  --pulse-offset-on   : .9s;
+  --c-core            : #ffffff;
+  --c-back            : #b5b5b5;
+  --c-wave            : rgba(255,255,255,.4);
+  --c-icon            : #000;
+  --c-core-on         : #1DBEA7;
+  --c-back-on         : #1DBEA7;
+  --c-wave-on         : rgba(29,190,167,.45);
+  --c-icon-on         : #fff;
+}
+
+/* ---------- RESET MINIMAL ---------------------------------- */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:"Source Sans 3",system-ui,-apple-system,sans-serif;
+  color:#000;line-height:1.55;background:#fff;
+}
+img,video{max-width:100%;height:auto;display:block}
+
+/* ---------- BOUTONS GÉNÉRIQUES ----------------------------- */
+.btn{
+  display:inline-flex;align-items:center;gap:.25rem;
+  padding:.75rem 2rem;border-radius:30px;font-weight:500;
+  text-decoration:none;white-space:nowrap;
+}
+.btn.primary{background:var(--c-accent);color:#fff;border:2px solid transparent}
+.btn.outline{background:transparent;color:var(--c-accent);border:2px solid var(--c-accent)}
+
+/* ===============================================================
+   RYTHME VERTICAL  –  appliqué automatiquement
+   =============================================================== */
+
+/* espacement uniforme pour toutes les sections de <main> */
+main > section{
+  padding-block: var(--space-section);
+}
+
+/* utilitaires si besoin d’ajuster ponctuellement
+   (ajoute la classe sur <section … class="… section--tight">) */
+.section--tight { padding-block: calc(var(--space-section) / 2) !important; }
+.section--loose { padding-block: calc(var(--space-section) * 1.5) !important; }
+
+/* exceptions : sections déjà pleines hauteur/plein écran
+   → pas de padding supplémentaire */
+.hero-card,
+.coach-hero,
+.video-section{
+  padding-block: 0;
+}

@@ -1,0 +1,72 @@
+/* ===== RESULTS (graph + image) =============================== */
+.results{
+  /* le rythme global gère l’espace vertical ;
+     on serre juste un peu en haut :            */
+  padding-block-start: calc(var(--space-section) / 2); /* même effet que 0px */
+  display:flex;
+  justify-content:center;
+}
+
+.results-grid{
+  max-width:1100px;
+  width:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  gap:3rem;
+}
+
+.graph-display{
+  position:relative;
+  min-height:380px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.graph-prompt{
+  font-size:2.2rem;
+  font-weight:700;
+  text-align:center;
+  text-transform:uppercase;
+  color:var(--c-accent);
+  line-height:1.25;
+  padding-inline:1rem;                 /* ↔ uniquement */
+}
+
+.graph-img{
+  max-width:90%;
+  max-height:100%;
+  border-radius:var(--radius);
+  box-shadow:0 4px 16px rgba(0,0,0,.18);
+  display:none;
+}
+
+/* photo + hotspots ------------------------------------------- */
+.results-illu{position:relative;}
+.results-illu img{
+  width:100%;
+  border-radius:var(--radius);
+  object-fit:cover;
+}
+
+/* ----- animation texte ⇄ graph ------------------------------ */
+@keyframes slide-out-up   { to   { transform:translateY(-40px); opacity:0; } }
+@keyframes slide-in-down  { from { transform:translateY(40px);  opacity:0; }
+                             to   { transform:translateY(0);     opacity:1; } }
+
+.graph-layer{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+.graph-layer.show-graph .graph-prompt{
+  animation:slide-out-up .45s forwards;
+}
+.graph-layer.show-graph .graph-img{
+  display:block;
+  animation:slide-in-down .45s .05s forwards;
+}
