@@ -1,431 +1,795 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>NOVA-X – Démo page complète</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NOVA-X • démonstrateur</title>
 
-<!-- Source Sans 3 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;700&display=swap" rel="stylesheet">
 
-<style>
-/* ===== variables ================================================= */
-:root{
-  --c-accent : #1DBEA7;
-  --c-bg     : #faf7f2;
-  --radius   : 14px;
-  --vh       : 1vh;          /* correctif iOS                     */
-  --collapse : 960px;        /* largeur du breakpoint burger      */
-}
+  <!-- Feuille de style -->
+  <link rel="stylesheet" href="css/0-base.css">
+  <link rel="stylesheet" href="css/1-header.css">
+  <link rel="stylesheet" href="css/2-intro.css">
+  <link rel="stylesheet" href="css/3-stats.css">
+  <link rel="stylesheet" href="css/4-coach-hero.css">
+  <link rel="stylesheet" href="css/5-hotspots.css">
+  <link rel="stylesheet" href="css/6-results.css">
+  <link rel="stylesheet" href="css/7-alt.css">
+  <link rel="stylesheet" href="css/8-contact.css">
+  <link rel="stylesheet" href="css/9-footer.css">
+  <link rel="stylesheet" href="css/benefits.css">
+  <link rel="stylesheet" href="css/video.css">
+  <link rel="stylesheet" href="css/testimonials.css">
+  <link rel="stylesheet" href="css/downloads.css">
+  <link rel="stylesheet" href="css/story.css">
 
-/* ===== reset & base ============================================== */
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Source Sans 3',system-ui,-apple-system,sans-serif;color:#000;line-height:1.55;background:#fff}
-img,video{max-width:100%;height:auto;display:block}
+<!-- FAVICONS  ──────────────────────────────────────────────── -->
+<link rel="icon"              href="favicon.ico"           sizes="any"><!-- format .ico multi-tailles -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg"><!-- navigateur moderne -->
+<link rel="icon" type="image/png"      href="favicon-96x96.png"  sizes="96x96"><!-- rétro-compat -->
 
-/* ===== HERO / HEADER ============================================ */
-.hero-card{
-  position:relative;
-  height:calc(var(--vh)*100);  /* plein-écran mais pas fixe       */
-  overflow:hidden;
-  background:#fff;
-}
-.hero-card video{
-  position:absolute;top:50%;left:50%;
-  min-width:100%;min-height:100%;
-  width:auto;height:auto;
-  transform:translate(-50%,-50%);
-  object-fit:cover;object-position:center;z-index:0;
-}
+<!-- Apple / iOS -->
+<link rel="apple-touch-icon"  href="apple-touch-icon.png"  sizes="180x180">
+<meta name="apple-mobile-web-app-title" content="Cathpax">
 
-/* --- navigation -------------------------------------------------- */
-nav.nav{
-  position:absolute;top:3rem;left:6rem;right:6rem;
-  display:flex;align-items:center;justify-content:space-between;z-index:2;
-}
-.logo img{height:60px}
+<!-- PWA (Android, Windows) -->
+<link rel="manifest"          href="site.webmanifest">
+<meta name="theme-color" content="#1DBEA7">
+<!-- ────────────────────────────────────────────────────────── -->
 
-.nav-links{display:flex;align-items:center;gap:1.5rem}
-.menu{display:flex;gap:clamp(1.25rem,2.5vw,3rem)}
-.menu a{color:var(--c-accent);font-weight:500;white-space:nowrap;letter-spacing:.03em;text-decoration:none;transition:text-decoration .2s}
-.menu a:hover{text-decoration:underline}
-.nav-btn{padding:.5rem 1.5rem;border:2px solid var(--c-accent);border-radius:30px;color:var(--c-accent);font-weight:500;text-decoration:none;white-space:nowrap}
 
-/* burger */
-.burger{display:none;width:50px;height:50px;padding:8px;border:0;background:none;cursor:pointer;position:relative;z-index:3}
-.burger span,.burger::before,.burger::after{content:'';position:absolute;left:8px;right:8px;height:3px;background:var(--c-accent);transition:transform .3s,opacity .3s}
-.burger span{top:50%;transform:translateY(-50%)}
-.burger::before{top:12px}
-.burger::after{bottom:12px}
-.burger[aria-expanded="true"]::before{transform:translateY(6px) rotate(45deg)}
-.burger[aria-expanded="true"]::after {transform:translateY(-6px) rotate(-45deg)}
-.burger[aria-expanded="true"] span   {opacity:0}
-
-/* panneau mobile */
-.nav-panel{display:none;position:absolute;top:100%;right:0;background:rgba(255,255,255,.9);backdrop-filter:blur(6px);padding:2rem 3rem;min-width:220px;flex-direction:column;align-items:flex-start;gap:1.25rem;border-bottom-left-radius:var(--radius)}
-.nav-panel a{color:var(--c-accent);text-decoration:none;font-weight:500}
-.nav.open .nav-panel{display:flex}
-
-/* texte du header */
-.header-content{position:absolute;top:50%;left:6rem;transform:translateY(-50%);max-width:600px;z-index:2}
-.header-content h1{white-space:pre;font-size:clamp(1rem,6vw,4rem);line-height:1.2;font-weight:700;margin-bottom:2rem}
-.highlight{color:var(--c-accent)}
-.header-content p{font-size:1rem;line-height:1.6;margin-bottom:2rem;max-width:550px}
-.cta-buttons{display:flex;align-items:center;gap:1rem}
-.cta-buttons .btn{padding:.75rem 2rem;border-radius:30px;font-weight:500;text-decoration:none;white-space:nowrap}
-.btn.primary{background:var(--c-accent);color:#fff;border:2px solid transparent}
-.btn.outline {background:transparent;color:var(--c-accent);border:2px solid var(--c-accent)}
-
-/* breakpoint burger */
-@media(max-width:1024px){
-  .menu,.nav-btn{display:none}
-  .burger{display:block}
-  .header-content{left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-align:center;max-width:80vw}
-  .header-content p{max-width:60ch;margin:0 auto 2rem}
-  .cta-buttons{justify-content:center}
-}
-/* mode mobile logo seul */
-@media(max-width:640px){
-  nav.nav{left:50%;right:auto;transform:translateX(-50%);justify-content:center}
-  .nav-links,.burger,.nav-panel{display:none !important}
-  .logo img{height:48px}
-}
-
-/* =========================================================
-   SECTION — alternance carte / texte
-   ========================================================= */
-.alt-section{padding:6rem 1rem;display:flex;justify-content:center}
-.alt-wrap{max-width:1100px;width:100%;display:flex;flex-direction:column;gap:6rem}
-
-.alt-block{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4rem}
-.alt-img img{width:100%;border-radius:var(--radius);}
-.alt-text{max-width:480px}
-.alt-text .eyebrow{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#1DBEA7;margin-bottom:.5rem}
-.alt-text h3{text-transform: uppercase;font-size:3rem;font-weight:1500;line-height:1.3;margin-bottom:1rem;color:#1DBEA7}
-.alt-text p{color:#838383;font-size:1rem}
-.alt-block.reverse .alt-img{order:2}
-.alt-block.reverse .alt-text{order:1;text-align:right;margin-left:auto}
-.alt-text{
-  max-width:400px;
-  margin:0 auto;                   /* centre dans la grille        */
-  text-align:center;               /* centre l’alignement          */
-  display:flex;flex-direction:column;align-items:center;
-}
-
-/* on NE réaligne plus à droite quand c’est .reverse -------------- */
-.alt-block.reverse .alt-text{
-  text-align:center;
-  margin:0 auto;
-  align-items:center;
-}
-
-@media(max-width:800px){
-  .alt-block{grid-template-columns:1fr;gap:2rem}
-  .alt-block.reverse .alt-img,.alt-block.reverse .alt-text{order:unset;text-align:left;margin-left:0}
-  .alt-text{max-width:none;text-align:left}
-}
-
-/* ===== GRAND INTRO CENTRÉE =============================== */
-.intro-big{
-  /*background:var(--c-bg);          /* même crème que le site  */
-  padding:8rem 1rem 6rem;
-  display:flex;justify-content:center;
-}
-.intro-wrap{
-  max-width:1100px;width:100%;
-  text-align:center;
-  display:flex;flex-direction:column;align-items:center;gap:2.5rem;
-}
-
-/* eyebrow réutilise déjà la classe globale */
-.eyebrow{letter-spacing:.08em;text-transform:uppercase;font-size:.75rem;font-weight:700;color:#8d8d8d}
-
-/* gros titre sérif (Canela ou Playfair) */
-.intro-title{
-  font-family:'Source sans 3', serif;
-  color:#1DBEA7;  /* ← remplace par "Canela" si tu l’as */
-  font-weight:600;
-  font-size:clamp(2rem,5.5vw,3.8rem);
-  line-height:1.15;
-}
-
-/* paragraphe gris centré */
-.intro-lead{
-  max-width:850px;
-  font-size:1.125rem;
-  line-height:1.65;
-  color:#666;
-}
-
-/* responsive : espace réduit sur mobile */
-@media(max-width:640px){
-  .intro-big{padding:6rem 1rem 4rem}
-  .intro-lead{font-size:1rem}
-}
-
-/* logo de l’intro */
-.intro-logo{
-  height:48px;           /* ajuste si besoin */
-  margin-bottom:1.5rem;  /* espace sous le logo */
-}
-
-/* ===== Hero pleine largeur ===================================== */
-.coach-hero{
-  position:relative;width:100%;
-  height:60vh;min-height:480px;    /* hauteur flexible            */
-  overflow:hidden;
-}
-/* image fond */
-.coach-bg{
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  object-fit:cover;
-}
-
-/* voile sombre doux pour la lisibilité */
-.coach-hero::before{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(0,0,0,.25) 0%,rgba(0,0,0,.25) 100%);
-}
-
-/* contenu centré */
-.coach-overlay{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  max-width:1000px;width:90%;
-  display:flex;flex-direction:column;align-items:center;text-align:center;
-  color:#fff;gap:2rem;
-}
-
-/* réutilise la classe eyebrow, version blanche */
-.eyebrow.inverse{
-  font-size:.8rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
-  color:#fff;
-}
-
-/* gros titre sérif au centre */
-.coach-overlay h2{
-  font-family:'Playfair Display',serif;        /* ou "Canela" si tu l’as */
-  font-weight:700;
-  font-size:clamp(1.8rem,3.5vw,3.2rem);
-  line-height:1.2;
-}
-
-/* badges boutiques / partenaires */
-.coach-badges{display:flex;gap:1rem;flex-wrap:wrap}
-.coach-badges img{height:40px;width:auto}
-
-/* lien sous les badges */
-.coach-link{
-  font-size:.9rem;color:#fff;text-decoration:underline;
-  transition:opacity .2s;
-}
-.coach-link:hover{opacity:.8}
-
-/* ------ responsive --------- */
-@media(max-width:640px){
-  .coach-hero{height:65vh;min-height:380px}
-  .coach-overlay{gap:1.5rem}
-  .coach-badges img{height:32px}
-}
-
-</style>
 </head>
+
+
+
 <body>
 
-<!-- ===== HEADER ================================================== -->
-<header class="hero-card">
-  <video autoplay muted loop playsinline poster="images/header-fallback.jpg">
-    <source src="video/videosite.mp4" type="video/mp4">
-  </video>
+  <!-- ================================================= HEADER -->
+  <header class="hero-card">
+    <video autoplay muted loop playsinline poster="images/header-fallback.jpg">
+      <source src="video/videosite.mp4" type="video/mp4">
+    </video>
 
-  <nav class="nav" aria-label="Navigation principale">
-    <a href="/" class="logo" aria-label="Accueil"><img src="images/logo.svg" alt=""></a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="/" class="logo" aria-label="Accueil">
+        <img src="images/logo.svg" alt="CathPax">
+      </a>
 
-    <div class="nav-panel">
-      <a href="#">Features</a><a href="#">Benefits</a><a href="#">Testimonials</a>
-      <a href="#">Media</a><a href="#" class="nav-btn">Request a demo</a>
-    </div>
-
-    <div class="nav-links">
-      <div class="menu">
-        <a href="#">Features</a><a href="#">Benefits</a><a href="#">Testimonials</a><a href="#">Media</a>
+      <div class="nav-panel">
+        <a href="#">Features</a><a href="#">Benefits</a><a href="#">Testimonials</a>
+        <a href="#">Media</a><a href="#" class="nav-btn">Request a demo</a>
       </div>
-      <a href="#" class="nav-btn">Request a demo</a>
+
+      <div class="nav-links">
+        <div class="menu">
+          <a href="#">Features</a><a href="#">Benefits</a>
+          <a href="#">Testimonials</a><a href="#">Media</a>
+        </div>
+        <a href="#" class="nav-btn">Request a demo</a>
+      </div>
+
+      <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span></button>
+    </nav>
+
+    <div class="header-content">
+      <h1>What if you could reduce<br>your exposure by <span class="highlight">90%</span> without<br>wearing lead aprons ?</h1>
+      <p>Step into the future of safety with NOVA-X — the world’s first full-body, team-wide protection system that reduces radiation exposure by up to 90 %, without the burden of lead aprons.</p>
+      <div class="cta-buttons">
+        <a href="#" class="btn primary">Request a demo</a>
+        <a href="#" class="btn outline">Watch Video →</a>
+      </div>
     </div>
+  </header>
 
-    <button class="burger" aria-label="Ouvrir le menu" aria-expanded="false"><span></span></button>
-  </nav>
 
-  <div class="header-content">
-    <h1>What if you could reduce<br>your exposure by <span class="highlight">90%</span> without<br>wearing lead aprons ?</h1>
-    <p>Step into the future of safety with NOVA-X — the world’s first full-body,
-       team-wide protection system that reduces radiation exposure by up to 90 %,
-       without the burden of lead aprons.</p>
-    <div class="cta-buttons">
-      <a href="#" class="btn primary">Request a demo</a>
-      <a href="#" class="btn outline">Watch Video →</a>
-    </div>
-  </div>
-</header>
+  <!-- ================================================= MAIN -->
+  <main>
 
-<!-- ===== CONTENU ================================================= -->
-<main>
+    <!-- ---------- intro logo + titre ------------------------- -->
+    <section class="intro-big section--tight">
+      <div class="intro-wrap">
+        <img src="images/novax.png" class="intro-logo" alt="Nova-X">
+        <h2 class="intro-title">
+          The only team-wide full-body protection system with 2 mm lead equivalency.
+        </h2>
+      </div>
+    </section>
 
-  <!-- SECTION D’INTRO GRAND FORMAT -->
-<section class="intro-big">
-  <div class="intro-wrap">
-    <!-- logo centré -->
-    <img src="images/novax.png" alt="CathPax" class="intro-logo">
 
-    <h2 class="intro-title">
-      The only team-wide full body protection system with 2mm lead equivalency.
-    </h2>
+    <!-- ---------- RESULTS : hotspots + graphique ------------- -->
+    <section class="results section--loose">
+      <div class="results-grid">
 
-    <p class="intro-lead">
-      Guter Schlaf ist der Motor für Energie am Tag. NOVA-X kann dich
-      dabei unterstützen, deinen Tag positiv abzuschließen, schneller
-      einzuschlafen und ausgeruhter aufzuwachen.
-    </p>
+        <!-- Colonne GAUCHE : prompt ou graphique -->
+   <div class="graph-display">
+    <div class="graph-layer">               <!-- ← conteneur manquant -->
+       <p  class="graph-prompt">DISCOVER&nbsp;HOW NOVA-X PROTECTS&nbsp;YOU</p>
+      <img class="graph-img"   src="" alt="Dose-reduction graph">
+     </div>                                   <!-- ───────────────────── -->
+   </div>
+
+        <!-- Colonne DROITE : photo + hotspots -->
+        <figure class="results-illu">
+          <img src="images/vueiso.jpg" alt="NOVA-X set-up">
+
+          <button class="Hotspot" style="top:40%; left:40%;" data-graph="1" aria-pressed="false">
+            <span class="Hotspot__core">
+              <svg class="Hotspot__icon" viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="12" y1="5"  x2="12" y2="19" class="icon-vert"/>
+                <line x1="5"  y1="12" x2="19" y2="12" class="icon-horiz"/>
+              </svg>
+            </span>
+            <span class="Hotspot__wave wave-1"></span>
+            <span class="Hotspot__wave wave-2"></span>
+            <span class="Hotspot__wave wave-3"></span>
+          </button>
+
+          <button class="Hotspot" style="top:55%; left:48%;" data-graph="2" aria-pressed="false">
+            <span class="Hotspot__core">
+              <svg class="Hotspot__icon" viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="12" y1="5"  x2="12" y2="19" class="icon-vert"/>
+                <line x1="5"  y1="12" x2="19" y2="12" class="icon-horiz"/>
+              </svg>
+            </span>
+            <span class="Hotspot__wave wave-1"></span>
+            <span class="Hotspot__wave wave-2"></span>
+            <span class="Hotspot__wave wave-3"></span>
+          </button>
+
+          <button class="Hotspot" style="top:70%; left:58%;" data-graph="3" aria-pressed="false">
+            <span class="Hotspot__core">
+              <svg class="Hotspot__icon" viewBox="0 0 24 24" aria-hidden="true">
+                <line x1="12" y1="5"  x2="12" y2="19" class="icon-vert"/>
+                <line x1="5"  y1="12" x2="19" y2="12" class="icon-horiz"/>
+              </svg>
+            </span>
+            <span class="Hotspot__wave wave-1"></span>
+            <span class="Hotspot__wave wave-2"></span>
+            <span class="Hotspot__wave wave-3"></span>
+          </button>
+        </figure>
+
+      </div>
+    </section>
+
+   <!-- ---------- hero “coaching” plein-écran ------------------ -->
+    <section class="coach-hero section--tight">
+      <img src="images/coach-hero.webp" class="coach-bg" alt="">
+      <div class="coach-overlay">
+        <h2>Step confidently into the cath lab—stay out of harmful radiation, protected completely by cutting-edge Nova-X technology</h2>
+    </section>
+    
+
+        <!-- ---------- chiffres clés -------------------------------- -->
+    <section class="stats section--loose">
+      <div class="stats-card">
+        <div class="stat"><span class="stat-value">2 mm</span><span class="stat-label">Lead<br>equivalence</span></div>
+        <div class="stat"><span class="stat-value">-90 %</span><span class="stat-label">Without<br>wearing lead<br>apron</span></div>
+        <div class="stat"><span class="stat-value">16</span><span class="stat-label">Patented<br>innovations</span></div>
+      </div>
+    </section>
+
+
+
+     <!-- ================================================= BENEFITS -->
+<section class="benefits">
+  <div class="benefits-wrap">
+
+    <article class="benefit">
+      <figure class="benefit-ico">
+        <img src="images/ico1.webp" alt="" aria-hidden="true">
+      </figure>
+      <h3 class="benefit-title">Protects&nbsp;against<br>radiation&nbsp;injuries</h3>
+      <p class="benefit-text">
+        Prevent occupational diseases (cancer, cataract, cognitive disorders, DNA damage and other X-ray-exposure-related conditions).
+      </p>
+    </article>
+
+    <article class="benefit">
+      <figure class="benefit-ico">
+        <img src="images/ico2.webp" alt="" aria-hidden="true">
+      </figure>
+      <h3 class="benefit-title">Reduces<br>musculoskeletal<br>disorders</h3>
+      <p class="benefit-text">
+        50 % of interventionalists suffer from MSDs.<br>
+        Transition toward lead-free procedures.
+      </p>
+    </article>
+
+    <article class="benefit">
+      <figure class="benefit-ico">
+        <img src="images/ico3.webp" alt="" aria-hidden="true">
+      </figure>
+      <h3 class="benefit-title">Reduces stress&nbsp;and<br>fatigue</h3>
+      <p class="benefit-text">
+        Encourages interventionalists to perform more complex, distal and longer procedures for the patient’s benefit.
+      </p>
+    </article>
+
+    <article class="benefit">
+      <figure class="benefit-ico">
+        <img src="images/ico4.png" alt="" aria-hidden="true">
+      </figure>
+      <h3 class="benefit-title">Optimises health economics<br>and social outcomes</h3>
+      <p class="benefit-text">
+        Reduces sick leave due to occupational hazards.<br>
+        Decreases stress and fatigue among cath-lab staff.<br>
+        Promotes engagement of women in interventional careers.
+      </p>
+    </article>
+
   </div>
 </section>
 
-<!-- SECTION • Schlaf-Coaching pleine largeur -->
-<section class="coach-hero">
-  <!-- image de fond 2560×1000 env. -->
-  <img src="images/coach-hero.jpg" alt="" class="coach-bg">
-
-  <div class="coach-overlay">
-    <p class="eyebrow inverse">SCHLAFCOACHING</p>
-
-    <h2>
-      Verbinde NOVA-X mit deiner&nbsp;Smartwatch<br>
-      und bringe deinen Schlaf auf das nächste&nbsp;Level.
-    </h2>
-
-    <div class="coach-badges">
-      <img src="images/apple-health-badge.svg"  alt="Works with Apple Health">
-      <img src="images/health-connect-badge.svg" alt="Works with Health Connect">
-    </div>
-
-    <a href="#" class="coach-link">Kompatible Smartwatches anzeigen</a>
+<!-- ================================================= VIDEO -->
+<section class="video-section">
+  <div class="video-wrapper">
+    <video
+      autoplay          
+      loop              
+      muted             
+      playsinline       
+      controls          
+      preload="metadata"
+      poster="images/video-thumb.jpg"
+    >
+      <!-- source(s) encodées en H.264 / AAC pour la compatibilité max -->
+      <source src="video/testimonial.mov" type="video/mp4">
+      <source src="video/testimonial.webm" type="video/webm">
+      <!-- fallback texte -->
+      Votre navigateur ne peut pas lire cette vidéo.
+    </video>
   </div>
 </section>
 
-  <!-- Section alternée cartes / textes -->
-  <section class="alt-section">
-    <div class="alt-wrap">
+<!-- ================================================= TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testi-window">
+  <div class="testi-track">
 
-      <article class="alt-block">
-        <figure class="alt-img"><img src="images/alt1.webp" alt=""></figure>
+    <!-- 1 -->
+    <article class="testi-card">
+      <figure class="testi-photo">
+        <img src="images/testi1.jpg" alt="Dr. Mark A. photo">
+      </figure>
+      <div class="testi-content">
+        <h4>Dr. Mark A.</h4>
+        <p class="role">Interventional Cardiologist</p>
+        <blockquote>
+          Prevent occupational diseases (cancer, cataract, cognitive
+          disorders, DNA damage and other X-ray related conditions).
+        </blockquote>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="testi-card">
+      <figure class="testi-photo">
+        <img src="images/testi2.jpg" alt="Dr. Julia B. photo">
+      </figure>
+      <div class="testi-content">
+        <h4>Dr. Julia B.</h4>
+        <p class="role">Vascular Surgeon</p>
+        <blockquote>
+          50 % of interventionalists suffer from MSDs. NOVA-X helps the
+          transition toward lead-free procedures.
+        </blockquote>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="testi-card">
+      <figure class="testi-photo">
+        <img src="images/testi3.jpg" alt="Dr. Peter C. photo">
+      </figure>
+      <div class="testi-content">
+        <h4>Dr. Peter C.</h4>
+        <p class="role">Interventional Radiologist</p>
+        <blockquote>
+          Encourages me to perform more complex, distal and longer
+          procedures for the patient’s benefit.
+        </blockquote>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="testi-card">
+      <figure class="testi-photo">
+        <img src="images/testi4.jpg" alt="Dr. Lisa D. photo">
+      </figure>
+      <div class="testi-content">
+        <h4>Dr. Lisa D.</h4>
+        <p class="role">EP Consultant</p>
+        <blockquote>
+          Reduces sick-leave due to occupational hazards and improves
+          team engagement in the cath-lab.
+        </blockquote>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="testi-card">
+      <figure class="testi-photo">
+        <img src="images/testi5.jpg" alt="Dr. Ahmed E. photo">
+      </figure>
+      <div class="testi-content">
+        <h4>Dr. Ahmed E.</h4>
+        <p class="role">Cath-lab Director</p>
+        <blockquote>
+          Stress and fatigue dramatically decreased after deploying
+          NOVA-X in our daily practice.
+        </blockquote>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="testi-card">
+      <figure class="testi-photo">
+        <img src="images/testi6.jpg" alt="Dr. Olivia F. photo">
+      </figure>
+      <div class="testi-content">
+        <h4>Dr. Olivia F.</h4>
+        <p class="role">Interventional Cardiologist</p>
+        <blockquote>
+          Promotes engagement of women in interventional careers by
+          removing the burden of heavy lead.
+        </blockquote>
+      </div>
+    </article>
+</div>
+  </div>
+
+  <!-- Dots navigation -->
+  <div class="testi-dots" aria-label="Testimonials navigation">
+    <button class="dot is-active" data-index="0"></button>
+    <button class="dot" data-index="1"></button>
+    <button class="dot" data-index="2"></button>
+    <button class="dot" data-index="3"></button>
+  </div>
+</section>
+
+
+
+
+
+
+
+<!-- ---------- ALT SECTION : 3 blocs + hotspots ----------------- -->
+<section class="alt-section">
+  <div class="alt-wrap">
+
+    <!-- ═════════════════════════════════════════════════ BLOC 1 -->
+    <article class="alt-block">
+
+      <!-- colonne image + 3 hotspots -->
+      <figure class="alt-img">
+        <img src="images/alt1.webp" alt="Nova-X cabinet – front view">
+
+        <button class="Hotspot" style="top:18%;left:40%;" data-hs="1" aria-pressed="false">
+          <span class="Hotspot__core">
+            <svg class="Hotspot__icon" viewBox="0 0 24 24"><line x1="12" y1="5"  x2="12" y2="19"/><line x1="5"  y1="12" x2="19" y2="12"/></svg>
+          </span>
+          <span class="Hotspot__wave wave-1"></span>
+          <span class="Hotspot__wave wave-2"></span>
+          <span class="Hotspot__wave wave-3"></span>
+        </button>
+
+        <button class="Hotspot" style="top:45%;left:30%;" data-hs="2" aria-pressed="false">
+          <span class="Hotspot__core">
+            <svg class="Hotspot__icon" viewBox="0 0 24 24"><line x1="12" y1="5"  x2="12" y2="19"/><line x1="5"  y1="12" x2="19" y2="12"/></svg>
+          </span>
+          <span class="Hotspot__wave wave-1"></span><span class="Hotspot__wave wave-2"></span><span class="Hotspot__wave wave-3"></span>
+        </button>
+
+        <button class="Hotspot" style="top:55%;left:75%;" data-hs="3" aria-pressed="false">
+          <span class="Hotspot__core">
+            <svg class="Hotspot__icon" viewBox="0 0 24 24"><line x1="12" y1="5"  x2="12" y2="19"/><line x1="5"  y1="12" x2="19" y2="12"/></svg>
+          </span>
+          <span class="Hotspot__wave wave-1"></span><span class="Hotspot__wave wave-2"></span><span class="Hotspot__wave wave-3"></span>
+        </button>
+      </figure>
+
+      <!-- colonne texte/reveal -->
+      <div class="alt-col">
+
+        <!-- texte par défaut -->
         <div class="alt-text">
           <h3>Unmatched radiation protection</h3>
           <p>Experience unmatched radiation protection with unique patented materials offering 2 mm lead equivalency.</p>
         </div>
-      </article>
 
-      <article class="alt-block reverse">
-        <figure class="alt-img"><img src="images/alt2.webp" alt=""></figure>
-        <div class="alt-text">
-          <h3>Unique safety features (Dosicath® & Laserguards®)</h3>
-          <p>Dosicath® monitors real-time doses inside and outside the system, enabling prompt adjustments and recording all data. LaserGuard® visually indicates protected zones, ensuring full-body safety and unique positioning guidance within Nova-X®.</p>
+        <!-- panneaux révélés -->
+        <div class="alt-reveal" data-reveal="1">
+          <h3>NOVASHIELD GLASS®</h3>
+          <p>These ceiling-mounted glass panels made from patented lead-free Novashield glass® protect against scattered radiation from the ceiling, which is often underestimated in the cath lab.</p>
+          <img src="images/alt1-1.jpg" class="alt-reveal-img" alt="">
         </div>
-      </article>
 
-      <article class="alt-block">
-        <figure class="alt-img"><img src="images/alt3.webp" alt=""></figure>
-        <div class="alt-text">
-          <h3>OUTSTANDING ERGONOMICS</h3>
-          <p>Nova-X offers outstanding ergonomics to limit its footprint and ensure perfect fit with any cathlab.</p>
+        <div class="alt-reveal" data-reveal="2">
+          <h3>DIAMOND GLASS®</h3>
+          <p>This stress-resistant material offers perfect patient vision thanks to its high transparency and provides a 2 mm lead equivalence optimally protecting the entire team. </p>
+          <img src="images/alt1-2.jpg" class="alt-reveal-img" alt="">
         </div>
-      </article>
 
-    </div>
-  </section>
+        <div class="alt-reveal" data-reveal="3">
+          <h3>RX41® & RX45®</h3>
+          <p>These flexible lead-free shutters ensure optimal radiation protection against scattered radiation from the patient. Thanks to their flexibility, the shutters can be adjusted for each patient’s profile.</p>
+          <img src="images/alt1-3.jpg" class="alt-reveal-img" alt="">
+        </div>
 
-  <!-- SECTION D’INTRO GRAND FORMAT -->
-<section class="intro-big">
-  <div class="intro-wrap">
-    <!-- logo centré -->
-    <img src="images/novax.png" alt="CathPax" class="intro-logo">
+      </div><!-- /.alt-col -->
+    </article>
 
-    <h2 class="intro-title">
-      The only team-wide full body protection system with 2mm lead equivalency.
-    </h2>
 
-    <p class="intro-lead">
-      Guter Schlaf ist der Motor für Energie am Tag. NOVA-X kann dich
-      dabei unterstützen, deinen Tag positiv abzuschließen, schneller
-      einzuschlafen und ausgeruhter aufzuwachen.
-    </p>
+
+    <!-- ═════════════════════════════════════════════════ BLOC 2 -->
+    <article class="alt-block reverse">
+
+      <!-- image + hotspots -->
+      <figure class="alt-img">
+        <img src="images/alt2.webp" alt="Nova-X – side view">
+
+        <button class="Hotspot" style="top:7%;left:65%;" data-hs="1" aria-pressed="false">
+          <span class="Hotspot__core"><svg class="Hotspot__icon" viewBox="0 0 24 24"><line x1="12" y1="5"  x2="12" y2="19"/><line x1="5"  y1="12" x2="19" y2="12"/></svg></span>
+          <span class="Hotspot__wave wave-1"></span><span class="Hotspot__wave wave-2"></span><span class="Hotspot__wave wave-3"></span>
+        </button>
+
+        <button class="Hotspot" style="top:62%;left:20%;" data-hs="2" aria-pressed="false">
+          <span class="Hotspot__core"><svg class="Hotspot__icon" viewBox="0 0 24 24"><line x1="12" y1="5"  x2="12" y2="19"/><line x1="5"  y1="12" x2="19" y2="12"/></svg></span>
+          <span class="Hotspot__wave wave-1"></span><span class="Hotspot__wave wave-2"></span><span class="Hotspot__wave wave-3"></span>
+        </button>
+
+      </figure>
+
+      <div class="alt-col">
+
+        <div class="alt-text">
+          <h3>Unique safety features<br>(Dosicath® &amp; Laserguards®)</h3>
+          <p>Dosicath® monitors real-time doses… LaserGuard® visually indicates protected zones.</p>
+        </div>
+
+        <div class="alt-reveal" data-reveal="1">
+          <h3>DOSICATH®</h3>
+          <p>This proprietary technology displays 
+real-time received doses inside and 
+outside of the system.
+It allows for immediate corrective actions in case of dose leakage caused by incorrect system positioning. All doses can also be recorded and stored on a dedicated platform for each procedure.
+</p>
+          <img class="alt-reveal-img" src="images/alt2-1.jpg" alt="">
+        </div>
+
+        <div class="alt-reveal" data-reveal="2">
+          <h3>LASERGUARD®</h3>
+          <p>This proprietary technology, specifically 
+designed for Nova-X®, delineates a zone 
+on the floor where radiation protection is effective for Healthcare providers. 
+Nova-X® is the only full-body radiation 
+protection system offering this key safety feature. 
+</p>
+          <img class="alt-reveal-img" src="images/alt2-2.jpg" alt="">
+        </div>
+      </div><!-- /.alt-col -->
+    </article>
+
+
+
+    <!-- ═════════════════════════════════════════════════ BLOC 3 -->
+    <article class="alt-block">
+
+      <figure class="alt-img">
+        <img src="images/alt3.webp" alt="Nova-X – lower part">
+
+        <button class="Hotspot" style="top:60%;left:50%;" data-hs="1" aria-pressed="false">
+          <span class="Hotspot__core"><svg class="Hotspot__icon" viewBox="0 0 24 24"><line x1="12" y1="5"  x2="12" y2="19"/><line x1="5"  y1="12" x2="19" y2="12"/></svg></span>
+          <span class="Hotspot__wave wave-1"></span><span class="Hotspot__wave wave-2"></span><span class="Hotspot__wave wave-3"></span>
+        </button>
+
+        <button class="Hotspot" style="top:60%;left:80%;" data-hs="2" aria-pressed="false">
+          <span class="Hotspot__core"><svg class="Hotspot__icon" viewBox="0 0 24 24"><line x1="12" y1="5"  x2="12" y2="19"/><line x1="5"  y1="12" x2="19" y2="12"/></svg></span>
+          <span class="Hotspot__wave wave-1"></span><span class="Hotspot__wave wave-2"></span><span class="Hotspot__wave wave-3"></span>
+        </button>
+      </figure>
+
+      <div class="alt-col">
+
+        <div class="alt-text">
+          <h3>Outstanding ergonomics</h3>
+          <p>Nova-X offers outstanding ergonomics to limit its footprint and ensure perfect fit with any cath-lab.</p>
+        </div>
+
+        <div class="alt-reveal" data-reveal="1">
+          <h3>BI-PLANE & SIGLE PLANE COMPATIBILITY</h3>
+          <p>Thanks its flexible frame and specially designed front wheels, Nova-X® is compatible with bi-plane c-arms (all incidences) and with any imaging system.</p>
+          <img class="alt-reveal-img" src="images/alt3-1.jpg" alt="">
+        </div>
+
+        <div class="alt-reveal" data-reveal="2">
+          <h3>WHEELGLIDER®</h3>
+          <p>This proprietary technology ensures effortless mobility (4kg) for all users, allowing smooth and precise movement at a controlled speed, with minimal bulk thanks to a triple rotation axis system. This system also ensures effortless small movements during the procedure</p>
+          <img class="alt-reveal-img" src="images/alt3-2.jpg" alt="">
+        </div>
+
+      </div><!-- /.alt-col -->
+    </article>
+
+  </div><!-- /.alt-wrap -->
+</section>
+
+
+
+
+
+
+
+    <!-- ================================================= DOWNLOADS -->
+<section class="downloads">
+  <div class="downloads-wrap">
+
+    <!-- --- 1. Spec Sheet ------------------------------------ -->
+    <article class="dl-card">
+      <figure class="dl-thumb">
+        <img src="images/brochure-spec.jpg" alt="Spec-sheet cover">
+      </figure>
+      <a href="pdf/spec-sheet.pdf" class="btn primary dl-btn" download>
+        Spec Sheet Brochure&nbsp; <svg aria-hidden="true" width="18" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7 1.5V8h4.5L13 3.5ZM12 18l4-4h-2.5V10h-3v4H8l4 4Z"/></svg>
+      </a>
+    </article>
+
+    <!-- --- 2. Clinical Results ------------------------------- -->
+    <article class="dl-card">
+      <figure class="dl-thumb">
+        <img src="images/brochure-clinical.jpg" alt="Clinical-result cover">
+      </figure>
+      <a href="pdf/clinical-result.pdf" class="btn primary dl-btn" download>
+        Clinical Result&nbsp; <svg aria-hidden="true" width="18" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7 1.5V8h4.5L13 3.5ZM12 18l4-4h-2.5V10h-3v4H8l4 4Z"/></svg>
+      </a>
+    </article>
+
+    <!-- --- 3. Product Brochure ------------------------------- -->
+    <article class="dl-card">
+      <figure class="dl-thumb">
+        <img src="images/brochure-product.jpg" alt="Product-brochure cover">
+      </figure>
+      <a href="pdf/product-brochure.pdf" class="btn primary dl-btn" download>
+        Product Brochure&nbsp; <svg aria-hidden="true" width="18" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm7 1.5V8h4.5L13 3.5ZM12 18l4-4h-2.5V10h-3v4H8l4 4Z"/></svg>
+      </a>
+    </article>
+
   </div>
 </section>
 
-<!-- SECTION • Schlaf-Coaching pleine largeur -->
-<section class="coach-hero">
-  <!-- image de fond 2560×1000 env. -->
-  <img src="images/coach-hero2.jpg" alt="" class="coach-bg">
 
-  <div class="coach-overlay">
-    <p class="eyebrow inverse">SCHLAFCOACHING</p>
+<!-- ================================================= STORY -->
+<section class="story">
+  <div class="story-wrap">
 
-    <h2>
-      Verbinde NOVA-X mit deiner&nbsp;Smartwatch<br>
-      und bringe deinen Schlaf auf das nächste&nbsp;Level.
-    </h2>
+<!-- ================================================= STORY -->
+<section class="story">
+  <div class="story-wrap">
+    <!-- ───── T I T L E ─────────────────────────── -->
+    <h2 class="story-title">ABOUT&nbsp;CATHPAX</h2>
 
-    <div class="coach-badges">
-      <img src="images/apple-health-badge.svg"  alt="Works with Apple Health">
-      <img src="images/health-connect-badge.svg" alt="Works with Health Connect">
+    <!-- paragraphe toujours visible -->
+    <p>
+      Founded in <strong>2024</strong>, Cathpax designs, develops and commercialises
+      innovative, full-body, team-wide radiation-protection systems for cath-lab staff
+      during interventional procedures. As part of the Lemer Pax group, the company
+      leverages more than 50 years of innovation in the radiation-protection field.
+      A pioneer in ionising-radiation protection since the 1970s, Lemer Pax has spent
+      the past two decades developing groundbreaking innovations to advance its mission
+      of <em>Protecting Life<sup>®</sup></em>. The group has created cutting-edge
+      radiation-protection materials and technologies used in thousands of products
+      worldwide. Today, Lemer Pax covers three major areas of expertise through
+      three entities: Lemer Pax (civilian-nuclear sector, radiopharmacy, nuclear
+      medicine and radiology), GMP (therapy-radioisotope production) and
+      Cathpax (interventional medicine).
+    </p><br>
+
+    <!-- contenu masqué au chargement -->
+    <div class="story-more">
+      <p>
+        Developed over more than ten years of R&amp;D,
+        <strong>Nova-X<sup>&reg;</sup></strong> is Cathpax’s second-generation
+        radiation-protection system. Protected by 16 patents, Nova-X<sup>&reg;</sup>
+        is currently the only available solution on the market providing
+        2 mm lead equivalence. The system features a unique dose-monitoring module
+        that displays real-time dose attenuation (Dosicath<sup>&reg;</sup>) and a
+        built-in laser that projects two green beams onto the floor, clearly marking
+        a safety zone to ensure full protection of healthcare providers
+        (LaserGuard<sup>&reg;</sup>).
+      </p><br>
+
+      <p>
+        Thanks to these unique features, Nova-X<sup>&reg;</sup> drastically improves
+        cath-lab staff safety and comfort, promoting stress-free working conditions
+        through efficient full-body and team-wide protection against radiation
+        injuries—ultimately benefiting patients. Nova-X<sup>&reg;</sup> received
+        CE-Mark certification in 2024, and the company expects FDA approval by the
+        end of 2025. Preliminary clinical evaluation has shown that, without lead
+        aprons, the dose received with Nova-X<sup>&reg;</sup> is equivalent to the
+        natural dose measured in the control room. A multicentre prospective
+        clinical study is under way to provide further evidence that
+        Nova-X<sup>&reg;</sup> enables safe lead-free procedures.<br>
+        Based in Nantes, France, Cathpax aims to become the world leader in
+        full-body, team-wide radiation protection for interventional medicine in
+        the coming years.
+      </p>
     </div>
 
-    <a href="#" class="coach-link">Kompatible Smartwatches anzeigen</a>
+    <!-- bouton centré -->
+    <button class="story-toggle" aria-expanded="false">
+      Read more&nbsp;▼
+    </button>
+
   </div>
 </section>
 
-  <!-- Section alternée cartes / textes -->
-  <section class="alt-section">
-    <div class="alt-wrap">
+  </div>
+</section>
 
-      <article class="alt-block">
-        <figure class="alt-img"><img src="images/alt1.webp" alt=""></figure>
-        <div class="alt-text">
-          <h3>Unmatched radiation protection</h3>
-          <p>Experience unmatched radiation protection with unique patented materials offering 2 mm lead equivalency.</p>
+
+<!-- ===============================================================
+   CONTACT – form (gauche) + photo (droite)
+================================================================= -->
+<section class="contact-section" id="contact">
+  <div class="contact-grid">
+
+    <!-- —— colonne formulaire ———————————————— -->
+    <form class="contact-form" action="#" method="post" autocomplete="on">
+
+      <h2 class="contact-title">
+        Get in Touch with<br>Cathpax&nbsp;Team
+      </h2>
+
+      <!-- nom + prénom sur la même ligne -->
+      <div class="field-row two-cols">
+        <div class="field">
+          <label for="fname">Full&nbsp;name <span>*</span></label>
+          <input type="text" id="fname" name="fname" required>
         </div>
-      </article>
 
-      <article class="alt-block reverse">
-        <figure class="alt-img"><img src="images/alt2.webp" alt=""></figure>
-        <div class="alt-text">
-          <h3>Unique safety features (Dosicath® & Laserguards®)</h3>
-          <p>Dosicath® monitors real-time doses inside and outside the system, enabling prompt adjustments and recording all data. LaserGuard® visually indicates protected zones, ensuring full-body safety and unique positioning guidance within Nova-X®.</p>
+        <div class="field">
+          <label for="lname">Last&nbsp;name <span>*</span></label>
+          <input type="text" id="lname" name="lname" required>
         </div>
-      </article>
+      </div>
 
-      <article class="alt-block">
-        <figure class="alt-img"><img src="images/alt3.webp" alt=""></figure>
-        <div class="alt-text">
-          <h3>OUTSTANDING ERGONOMICS</h3>
-          <p>Nova-X offers outstanding ergonomics to limit its footprint and ensure perfect fit with any cathlab.</p>
+      <!-- email -->
+      <div class="field">
+        <label for="email">Email <span>*</span></label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <!-- téléphone + pays -->
+      <div class="field-row two-cols">
+        <div class="field">
+          <label for="country">Phone&nbsp;number <span>*</span></label>
+          <select id="country" name="country" required>
+            <option value="US">US</option>
+            <option value="FR">FR</option>
+            <option value="DE">DE</option>
+            <!-- … complète si besoin … -->
+          </select>
         </div>
-      </article>
 
-    </div>
-  </section>
+        <div class="field">
+          <label for="phone" class="visually-hidden">phone</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+      </div>
 
-</main>
+      <!-- message -->
+      <div class="field">
+        <label for="msg">Your&nbsp;Message <span>*</span></label>
+        <textarea id="msg" name="msg" rows="4" required></textarea>
+      </div>
 
-<script>
-/* ----- iOS 100vh fix ----------------------------- */
-function updateVh(){ document.documentElement.style.setProperty('--vh', window.innerHeight*0.01+'px'); }
-window.addEventListener('resize',updateVh); updateVh();
+      <!-- rôle -->
+      <fieldset class="field role">
+        <legend>Role <span>*</span></legend>
 
-/* ----- Burger toggle ----------------------------- */
-const nav=document.querySelector('.nav'), burger=document.querySelector('.burger');
-if(burger){burger.addEventListener('click',()=>{const ex=burger.getAttribute('aria-expanded')==='true';burger.setAttribute('aria-expanded',!ex);nav.classList.toggle('open',!ex);});}
-</script>
+        <label class="chk">
+          <input type="checkbox" name="role" value="health" required>
+          <span>Healthcare&nbsp;professional</span>
+        </label>
+
+        <label class="chk">
+          <input type="checkbox" name="role" value="industry">
+          <span>Industry</span>
+        </label>
+
+        <label class="chk">
+          <input id="chk-other" type="checkbox" name="role" value="other">
+          <span>Other – please&nbsp;specify</span>
+        </label>
+      </fieldset>
+
+      <!-- champ « Other – please specify » (masqué par défaut) -->
+      <div class="field is-hidden" id="other-field">
+        <label for="role-other">Please specify your role <span>*</span></label>
+        <input type="text" id="role-other" name="role_other">
+      </div>
+
+      <!-- organisation -->
+      <div class="field">
+        <label for="org">Organization / Facility <span>*</span></label>
+        <input type="text" id="org" name="organization" required>
+      </div>
+
+      <!-- submit -->
+      <button type="submit" class="btn contact-submit">
+        Get in touch
+      </button>
+    </form>
+
+    <!-- —— colonne photo ———————————————— -->
+    <figure class="contact-photo">
+      <img src="images/contact-lab.webp"
+           alt="Team working with NOVA-X in cath-lab">
+    </figure>
+
+  </div>
+</section>
+
+
+
+  </main>
+
+  <script src="js/main.js"></script>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+
+    <!-- Logo -->
+    <a href="/" class="footer-logo">
+      <img src="images/logocathblanc.png" alt="Cathpax — Lemer Pax group">
+    </a>
+
+    <!-- 3 colonnes liens -->
+    <nav class="footer-cols" aria-label="Pied de page">
+
+      <div class="footer-col">
+        <h4>About us</h4>
+        <ul>
+          <li><a href="#">Mission</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Newsletter</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Refund Policy</a></li>
+          <li><a href="#">FAQ’s</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Social</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+
+    </nav>
+  </div>
+
+  <!-- mention légale -->
+  <p class="footer-copy">
+    © 2025 Cathpax. All rights reserved.
+    <a href="#">Legal Notice</a> |
+    <a href="#">Privacy Policy</a> |
+    <a href="#">Cookie Policy</a> |
+    <a href="#">Terms of Use</a>
+  </p>
+</footer>
+
 </body>
 </html>
