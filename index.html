@@ -100,61 +100,70 @@
     </section>
 
 
-    <!-- ---------- RESULTS : hotspots + graphique ------------- -->
-    <section class="results section--loose">
-      <div class="results-grid">
+   <!-- ---------- RESULTS : hotspots + graphique ------------- -->
+<section class="results section--loose">
+  <div class="results-grid">
 
-        <!-- Colonne GAUCHE : prompt ou graphique -->
-   <div class="graph-display">
-    <div class="graph-layer">               <!-- ← conteneur manquant -->
-       <p  class="graph-prompt">DISCOVER&nbsp;HOW NOVA-X PROTECTS&nbsp;YOU</p>
-      <img class="graph-img"   src="" alt="Dose-reduction graph">
-     </div>                                   <!-- ───────────────────── -->
-   </div>
+    <!-- Colonne GAUCHE : titre + texte + graphique -->
+    <div class="graph-display">
+      <div class="graph-layer">
 
-        <!-- Colonne DROITE : photo + hotspots -->
-        <figure class="results-illu">
-          <img src="images/vueiso.jpg" alt="NOVA-X set-up">
+        <!-- bloc info dynamique -->
+        <div class="graph-info">
+          <h3 class="graph-title">Base-line dose reduction</h3>
+          <p  class="graph-desc">Initial clinical evaluation (Nova-X closed, no aprons).</p>
+        </div>
 
-          <button class="Hotspot" style="top:40%; left:40%;" data-graph="1" aria-pressed="false">
-            <span class="Hotspot__core">
-              <svg class="Hotspot__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <line x1="12" y1="5"  x2="12" y2="19" class="icon-vert"/>
-                <line x1="5"  y1="12" x2="19" y2="12" class="icon-horiz"/>
-              </svg>
-            </span>
-            <span class="Hotspot__wave wave-1"></span>
-            <span class="Hotspot__wave wave-2"></span>
-            <span class="Hotspot__wave wave-3"></span>
-          </button>
-
-          <button class="Hotspot" style="top:55%; left:48%;" data-graph="2" aria-pressed="false">
-            <span class="Hotspot__core">
-              <svg class="Hotspot__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <line x1="12" y1="5"  x2="12" y2="19" class="icon-vert"/>
-                <line x1="5"  y1="12" x2="19" y2="12" class="icon-horiz"/>
-              </svg>
-            </span>
-            <span class="Hotspot__wave wave-1"></span>
-            <span class="Hotspot__wave wave-2"></span>
-            <span class="Hotspot__wave wave-3"></span>
-          </button>
-
-          <button class="Hotspot" style="top:70%; left:58%;" data-graph="3" aria-pressed="false">
-            <span class="Hotspot__core">
-              <svg class="Hotspot__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <line x1="12" y1="5"  x2="12" y2="19" class="icon-vert"/>
-                <line x1="5"  y1="12" x2="19" y2="12" class="icon-horiz"/>
-              </svg>
-            </span>
-            <span class="Hotspot__wave wave-1"></span>
-            <span class="Hotspot__wave wave-2"></span>
-            <span class="Hotspot__wave wave-3"></span>
-          </button>
-        </figure>
-
+        <!-- image -->
+        <img class="graph-img"
+             src="images/graph0.jpg"
+             alt="Dose-reduction graph – baseline">
       </div>
-    </section>
+    </div>
+
+    <!-- Colonne DROITE : photo + hotspots -->
+    <figure class="results-illu">
+      <img src="images/vueiso.jpg" alt="NOVA-X set-up">
+
+      <button class="Hotspot" style="top:40%; left:40%;" data-graph="1" aria-pressed="false">
+        <span class="Hotspot__core">
+          <svg class="Hotspot__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="12" y1="5"  x2="12" y2="19"/>
+            <line x1="5"  y1="12" x2="19" y2="12"/>
+          </svg>
+        </span>
+        <span class="Hotspot__wave wave-1"></span>
+        <span class="Hotspot__wave wave-2"></span>
+        <span class="Hotspot__wave wave-3"></span>
+      </button>
+
+      <button class="Hotspot" style="top:55%; left:48%;" data-graph="2" aria-pressed="false">
+        <span class="Hotspot__core">
+          <svg class="Hotspot__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="12" y1="5"  x2="12" y2="19"/>
+            <line x1="5"  y1="12" x2="19" y2="12"/>
+          </svg>
+        </span>
+        <span class="Hotspot__wave wave-1"></span>
+        <span class="Hotspot__wave wave-2"></span>
+        <span class="Hotspot__wave wave-3"></span>
+      </button>
+
+      <button class="Hotspot" style="top:70%; left:58%;" data-graph="3" aria-pressed="false">
+        <span class="Hotspot__core">
+          <svg class="Hotspot__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <line x1="12" y1="5"  x2="12" y2="19"/>
+            <line x1="5"  y1="12" x2="19" y2="12"/>
+          </svg>
+        </span>
+        <span class="Hotspot__wave wave-1"></span>
+        <span class="Hotspot__wave wave-2"></span>
+        <span class="Hotspot__wave wave-3"></span>
+      </button>
+    </figure>
+
+  </div>
+</section>
 
    <!-- ---------- hero “coaching” plein-écran ------------------ -->
     <section class="coach-hero section--tight">

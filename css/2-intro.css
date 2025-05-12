@@ -2,6 +2,7 @@
 .intro-big{
   display:flex;
   justify-content:center;
+  padding-bottom: 0px !important;
 }
 
 .intro-wrap{

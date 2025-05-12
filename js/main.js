@@ -22,43 +22,68 @@ burger?.addEventListener('click', () => {
 /* =========================================================
    HOTSPOTS – section RESULTS
    ========================================================= */
+const graphCfg = [
+  { img:'graph0.jpg',
+    title:'Discover how Nova-X protect you',
+    desc :'Initial clinical evaluation (Nova-X closed, no aprons).' },
+  { img:'graph1.jpg',
+    title:'Operator 1',
+    desc :'Nova-X deployed • Staff without aprons.' },
+  { img:'graph2.jpg',
+    title:'Operator 2',
+    desc :'Real-time Dosicath® monitoring (procedure XYZ).' },
+  { img:'graph3.jpg',
+    title:'Operator 3',
+    desc :'Open positions – comparison over 25 cases.' }
+];
+
 const resHotspots = document.querySelectorAll('.results .Hotspot');
 if (resHotspots.length){
-  const graphLayer  = document.querySelector('.graph-layer');
-  const graphImg    = document.querySelector('.graph-img');
-  const graphPrompt = document.querySelector('.graph-prompt');
+  const layer  = document.querySelector('.graph-layer');
+  const img    = layer.querySelector('.graph-img');
+  const title  = layer.querySelector('.graph-title');
+  const desc   = layer.querySelector('.graph-desc');
 
+  /* helper pour changer la vue -------------------------------- */
+  const showGraph = idx => {
+    const g = graphCfg[idx];
+    img.src         = `images/${g.img}`;
+    img.alt         = g.title;
+    title.textContent = g.title;
+    desc.textContent  = g.desc;
+    layer.classList.add('show-graph');          // animation
+  };
+
+  /* --- état initial (index 0) --- */
+  showGraph(0);
+
+  /* --- interaction hotspots --- */
   resHotspots.forEach(btn=>{
     const core  = btn.querySelector('.Hotspot__core');
-    const index = btn.dataset.graph;          // 1,2,3…
+    const idx   = +btn.dataset.graph;           // 1-3
 
-    core.addEventListener('click', () => {
+    core.addEventListener('click',()=>{
+      const isActive = !btn.classList.contains('is-active');
 
-      /* toggle actif ------------------------------------------------ */
-      const active = !btn.classList.contains('is-active');
-
-      /* réinitialise tous les boutons */
+      /* reset tous les boutons */
       resHotspots.forEach(b=>{
         b.classList.remove('is-active');
         b.setAttribute('aria-pressed','false');
       });
 
-      /* état choisi */
-      if (active){
+      /* si on active */
+      if (isActive){
         btn.classList.add('is-active');
         btn.setAttribute('aria-pressed','true');
-        graphImg.src = `images/graph${index}.jpg`;
-        graphLayer.classList.add('show-graph');
+        showGraph(idx);                         // 1,2,3
       } else {
-        graphLayer.classList.remove('show-graph');
+        /* si on désactive ⇒ on revient au graph 0 */
+        showGraph(0);
       }
-
-      /* prompt visible seulement si rien d’actif */
-      const one = [...resHotspots].some(b=>b.classList.contains('is-active'));
-      graphPrompt.style.display = one ? 'none' : 'block';
     });
   });
 }
+
 
 /* =========================================================
    HOTSPOTS – section ALT
