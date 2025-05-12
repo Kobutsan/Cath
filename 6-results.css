@@ -71,7 +71,7 @@
   width:100%;                        /* pleine largeur col.       */
   height:auto;
   border-radius:var(--radius);
-  box-shadow:0 4px 16px rgba(0,0,0,.0);
+  box-shadow:0 4px 16px rgba(0,0,0,.10);
 }
 
 /* ---------- COLONNE DROITE (photo + hotspots) ---------------- */
